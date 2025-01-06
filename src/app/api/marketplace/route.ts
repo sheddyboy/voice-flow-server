@@ -1,4 +1,5 @@
-import { MarketplaceResponse, RestructuredResponse } from "@/types";
+import { MarketplaceResponse } from "@/types";
+import { transformDataToRestructuredData } from "@/utils";
 import { NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -32,13 +33,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
-
-export function transformDataToRestructuredData(
-  response: MarketplaceResponse
-): RestructuredResponse {
-  return response.records.reduce<RestructuredResponse>((acc, record) => {
-    acc[record.fields.TemplateID] = record.fields.Downloads ?? 0;
-    return acc;
-  }, {});
 }
