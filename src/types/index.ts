@@ -1,9 +1,9 @@
 export interface MarketplaceResponse {
-  records: Record[];
+  records: AirTableRecord[];
   offset: string;
 }
 
-export interface Record {
+export interface AirTableRecord {
   id: string;
   createdTime: Date;
   fields: Fields;
