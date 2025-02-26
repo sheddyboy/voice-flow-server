@@ -2,13 +2,14 @@ import { AirTableRecord, MarketplaceResponse } from "@/types";
 import { transformDataToRestructuredData } from "@/utils";
 import { NextResponse } from "next/server";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 export const dynamic = "force-static";
 // export const dynamic = "force-dynamic";
 
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TABLE_NAME = "Marketplace";
+const REVALIDATE_SECONDS = 4 * 3600;
 
 // export async function GET() {
 //   try {
@@ -65,7 +66,7 @@ async function fetchAllRecords(): Promise<AirTableRecord[]> {
 
       const response = await fetch(url.toString(), {
         headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` },
-        next: { revalidate: 3600 }, // Cache for 1 hour
+        next: { revalidate: REVALIDATE_SECONDS }, // Cache for 1 hour
       });
 
       if (!response.ok) throw new Error("Failed to fetch data from Airtable");
